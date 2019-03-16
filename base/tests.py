@@ -1,6 +1,6 @@
 import base64
 
-from .base_velosiped import base64_decode, to_base64
+from base_velosiped import base64_decode, to_base64
 
 
 def test_encode_latin():
@@ -10,7 +10,7 @@ def test_encode_latin():
 
 
 def test_encode_cyr():
-    text_data = 'Почему гугл не работает'
+    text_data = 'Почему гугл не работает? Куда обращаться?'
     bts = bytes(text_data, 'utf8')
     assert to_base64(bts) == base64.b64encode(bts)
 
