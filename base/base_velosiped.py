@@ -1,4 +1,5 @@
 ALPHABET = b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+ALPHABET_MAP = {char: idx for idx, char in enumerate(ALPHABET)}
 
 
 def to_base64(raw_input: bytes) -> bytes:
@@ -19,7 +20,7 @@ def to_base64(raw_input: bytes) -> bytes:
 
 
 def base64_decode(raw_input: bytes) -> bytes:
-    allowed_chars = ALPHABET + b'='
+    allowed_chars = set(ALPHABET + b'=')
     valid_input = bytes(char for char in raw_input if char in allowed_chars)
     padding_len = valid_input[-2:].count(b'=')
     without_padding = (
@@ -28,7 +29,7 @@ def base64_decode(raw_input: bytes) -> bytes:
     decoded = bytes()
     for i in range(0, len(without_padding), 4):
         num_container = sum(
-            ALPHABET.index(without_padding[i + 3 - byte_pos]) << (6 * byte_pos)
+            ALPHABET_MAP[without_padding[i+3 - byte_pos]] << (6 * byte_pos)
             for byte_pos in (3, 2, 1, 0)
         )
         decoded += bytes(
