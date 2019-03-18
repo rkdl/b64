@@ -14,11 +14,11 @@ def parse_cmd_args():
 
 def main():
     args = parse_cmd_args()
-    bts = bytes(args.file, 'utf8')
-    if args.decode:
-        print(base64_decode(bts).decode('utf8'))
-    else:
-        print(to_base64(bts))
+    with open(args.file, 'rb') as f:
+        bts = f.read()
+    converted = base64_decode(bts) if args.decode else to_base64(bts)
+    output = converted.decode('utf8')
+    print(output)
 
 
 if __name__ == '__main__':
